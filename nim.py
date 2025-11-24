@@ -1,7 +1,6 @@
 import math
 import random
 import time
-from typing import Dict, List, Sequence, Tuple
 
 
 class Nim():
@@ -97,7 +96,7 @@ class NimAI():
         best_future = self.best_future_reward(new_state)
         self.update_q_value(old_state, action, old, reward, best_future)
 
-    def get_q_value(self, state: Sequence[int], action: Tuple[int, int]) -> float:
+    def get_q_value(self, state, action):
         """
         Return the Q-value for the state `state` and the action `action`.
         If no Q-value exists yet in `self.q`, return 0.
@@ -105,14 +104,7 @@ class NimAI():
         key = (tuple(state), action)
         return float(self.q.get(key, 0.0))
 
-    def update_q_value(
-        self,
-        state: Sequence[int],
-        action: Tuple[int, int],
-        old_q: float,
-        reward: float,
-        future_rewards: float,
-    ) -> None:
+    def update_q_value(self, state, action, old_q, reward, future_rewards):
         """
         Update the Q-value for the state `state` and the action `action`
         given the previous Q-value `old_q`, a current reward `reward`,
@@ -140,7 +132,7 @@ class NimAI():
         # Store updated Q-value
         self.q[(state_key, action)] = updated_q
 
-    def best_future_reward(self, state: Sequence[int]) -> float:
+    def best_future_reward(self, state):
         """
         Given a state `state`, consider all possible `(state, action)`
         pairs available in that state and return the maximum of all
@@ -169,7 +161,7 @@ class NimAI():
         # returned: 0.0
         return best_value
     
-    def choose_action(self, state: Sequence[int], epsilon: bool = True) -> Tuple[int, int]:
+    def choose_action(self, state, epsilon=True):
         """
         Given a state `state`, return an action `(i, j)` to take.
 
@@ -196,7 +188,7 @@ class NimAI():
 
         # Greedy selection: choose action(s) with highest Q-value
         best_q = float("-inf")
-        best_actions: List[Tuple[int, int]] = []
+        best_actions = []
         for action in actions:
             q = self.get_q_value(state, action)
             if q > best_q:
