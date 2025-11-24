@@ -185,7 +185,7 @@ python -m venv venv
 
 ---
 
-**Universidade do Algarve — Departamento de Engenharia Eletrotécnica e Informática**
+**Universidade do Algarve — Instituto Superior de Engenharia**
 *2025*
 
 ---
