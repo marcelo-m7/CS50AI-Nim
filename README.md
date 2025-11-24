@@ -1,128 +1,181 @@
-# Agente de Q-Learning para o Jogo Nim
+# 🧠 Agente de Q-Learning para o Jogo Nim
 
-Aluno: **Marcelo Santos (a79433)**
+**Aluno:** Marcelo Santos (a79433)
+**Curso:** Engenharia de Sistemas e Tecnologias Informáticas — Universidade do Algarve
+**Unidade Curricular:** Inteligência Artificial
 
-Este trabalho, desenvolvido no âmbito da unidade curricular **Inteligência Artificial**, do curso **Engenharia de Sistemas e Tecnologias Informáticas (1.º ciclo) – Universidade do Algarve**, tem como objetivo implementar um agente inteligente capaz de aprender autonomamente a jogar o clássico jogo **Nim**.
+Este projeto tem como objetivo implementar um agente inteligente capaz de aprender autonomamente a jogar o jogo **Nim**, recorrendo a **aprendizagem por reforço** com a técnica de **Q-learning**.
 
 ---
 
-## Objetivo Geral
+## 🎯 Objetivo Geral
 
 Criar uma inteligência artificial baseada em **aprendizagem por reforço** (*Reinforcement Learning*), utilizando a técnica de **Q-learning**, para que o agente aprenda estratégias vencedoras no jogo Nim jogando repetidamente contra si mesmo.
 
 ---
 
-## O Problema: O Jogo Nim
+## 🎮 O Jogo Nim — Problema a Resolver
 
-Nim é um jogo de estratégia composto por vários montes contendo um determinado número de objetos. Dois jogadores retiram, alternadamente, um número à sua escolha de objetos de **um único monte**.
+O Nim consiste em vários montes, cada um com um número de objetos.
+Em cada jogada:
 
-**Regra essencial:** quem retirar o **último objeto perde**.
+* O jogador escolhe **um único monte**
+* Retira **quantos objetos quiser** desse monte
 
-Apesar de simples, o jogo envolve decisão estratégica, especialmente quando vários montes estão presentes e as possíveis combinações crescem rapidamente.
+**Perde quem retirar o último objeto.**
 
----
-
-## Solução Proposta
-
-O projeto propõe implementar um agente que:
-
-- **Aprende através da experiência**, analisando resultados de milhares de jogos simulados.
-- Atualiza continuamente as suas decisões com base no **algoritmo Q-learning**.
-- Utiliza uma política de exploração **ε-greedy**, equilibrando exploração e exploração.
-- Armazena valores Q para cada par *(estado, ação)*, permitindo prever quais jogadas são mais vantajosas.
+Apesar da simplicidade, a combinação de múltiplos montes produz um espaço de estados grande, tornando o problema ideal para técnicas de aprendizagem por reforço.
 
 ---
 
-## Principais Componentes Implementados
+## 🧩 Arquitetura da Solução
 
-### **1. Representação do Jogo (classe Nim)**
+O projeto é composto por dois ficheiros principais:
 
-- Mantém o estado dos montes.
-- Lista ações possíveis.
-- Processa jogadas e alterna turnos.
+* **`nim.py`** — implementação do jogo e do agente Q-learning
+* **`play.py`** — interface para treino e jogo humano
 
-### **2. Agente Inteligente (classe NimAI)**
+### Funções-chave implementadas (resumo)
 
-Responsável por:
+#### `get_q_value(state, action)`
 
-- Obter valores Q (função `get_q_value`)
-- Atualizar valores Q (função `update_q_value`)
-- Estimar recompensas futuras (função `best_future_reward`)
-- Escolher ações (função `choose_action`)
+* Retorna o valor Q associado ao par `(estado, ação)`.
+* Devolve `0.0` caso ainda não exista Q registado.
 
-### **3. Treino e Simulação**
+#### `update_q_value(state, action, old_q, reward, future_rewards)`
 
-- O agente joga contra si mesmo repetidamente.
-- Aprende gradualmente estratégias vencedoras.
-- Após o treino, pode jogar contra um humano.
+* Aplica a fórmula do Q-learning.
+* Atualiza a tabela Q interna (`self.q`).
+* Inclui logs úteis para debug.
+
+#### `best_future_reward(state)`
+
+* Calcula o maior Q possível entre todas as ações válidas naquele estado.
+* Retorna `0.0` se não existirem valores Q registados.
+
+#### `choose_action(state, epsilon=True)`
+
+* Implementa a política **ε-greedy**:
+
+  * Com probabilidade ε, escolhe ação aleatória.
+  * Caso contrário, escolhe a ação com maior valor Q.
 
 ---
 
-## Metodologia: Q-Learning
+## 📊 Resultados Preliminares do Treino
 
-O Q-learning segue a fórmula:
+Treino rápido utilizado:
 
 ```bash
-Q(s, a) ← old_q + α * ((reward + future_reward) − old_q)
+python3 -c "from nim import train; train(10)"
+```
+
+Observações do log:
+
+* No início, quase todos os `best_future_reward` são `0.0` (tabela Q vazia).
+* Com algumas iterações, surgem valores positivos crescentes (`0.25`, `0.5`, `0.75`, `0.875`) — o agente reforça decisões boas.
+* Surgem também valores negativos (`-0.5`, `-0.75`, `-0.96875`) — punições propagadas de jogadas que levaram à derrota.
+* A tabela Q começa a ganhar forma, distinguindo movimentos vantajosos dos prejudiciais.
+
+**Interpretação:** o agente demonstra sinais claros de aprendizagem — após mais jogos, espera-se estabilização das estratégias.
+
+---
+
+## 🏗️ Componentes Implementados
+
+### 1. **Classe `Nim`**
+
+* Representa o estado do jogo.
+* Gera ações válidas.
+* Aplica jogadas e alterna turnos.
+
+### 2. **Classe `NimAI`**
+
+* Geração e atualização de valores Q.
+* Estimativa de recompensas futuras.
+* Seleção de ações com política ε-greedy.
+
+### 3. **Treino e Jogo**
+
+* Treino autónomo (self-play).
+* Possibilidade de jogar contra o agente após treino.
+
+---
+
+## 📐 Metodologia (Q-Learning)
+
+O agente segue a atualização:
+
+```
+Q(s,a) ← old_q + α * ((reward + future_reward) − old_q)
 ```
 
 Onde:
 
-- **s** = estado atual do jogo
-- **a** = ação tomada
-- **α** = taxa de aprendizagem
-- **reward** = recompensa imediata
-- **future_reward** = melhor estimativa de recompensa futura
+* **s** = estado atual
+* **a** = ação tomada
+* **α** = taxa de aprendizagem
+* **reward** = recompensa imediata
+* **future_reward** = melhor Q futuro possível
 
-Com tempo e repetição, o agente converte experiência em estratégia.
+Com repetição suficiente, o agente ajusta os seus Q-values até convergir para uma política estável.
 
 ---
 
-## Como usar
+## ▶️ Como Utilizar
 
-- Treinar o agente: execute `python nim.py` (ou o script de treino existente).
-- Jogar contra o agente: execute `python play.py` (se disponível) para uma partida humana vs agente.
-
-### Execução local (exemplo)
-
-1. Criar e ativar um ambiente virtual (opcional):
-
-```bash
-python -m venv venv
-```
-
-2. Treinar (exemplo):
+### Treino
 
 ```bash
 python nim.py
 ```
 
+### Jogo humano vs agente
+
+```bash
+python play.py
+```
+
+### Treino rápido para inspeção
+
+```bash
+python -c "from nim import train; train(10)"
+```
+
+### Ambiente virtual (opcional)
+
+```bash
+python -m venv venv
+```
+
 ---
 
-## Técnicas e Ferramentas
+## 🛠️ Ferramentas e Técnicas
 
-- **Python 3.12**
-- **Q-Learning** e **ε-greedy**
-- Testes automáticos com `check50`, `style50`, `submit50`
-- Organização em branches Git e documentação (`README.md` e features opcionais)
-
----
-
-## Conclusão
-
-Este projeto demonstra como técnicas de Inteligência Artificial permitem que máquinas aprendam comportamento estratégico complexo **sem supervisão direta**, apenas através de tentativa, erro e reforço.
-
-A solução desenvolvida mostra a aplicação prática de conceitos fundamentais de RL, Q-learning e tomada de decisão probabilística num problema clássico e matematicamente rico como o Nim.
+* Python 3.12
+* Algoritmo **Q-learning**
+* Política **ε-greedy**
+* Testes automáticos com CS50 (`check50`, `style50`, `submit50`)
+* Git e documentação estruturada
 
 ---
 
-## Referências
+## 🚀 Melhorias Futuras (Features Planeadas)
+
+1. Persistência da tabela Q (`pickle`) para evitar re-treino completo.
+2. Experimentos com diferentes hiperparâmetros (α, ε, nº de jogos) incluindo registo de win-rate.
+3. Testes unitários para funções essenciais (`get_q_value`, `update_q_value`, `choose_action`, etc.).
+
+---
+
+## 🔗 Referências
 
 - [Nim – CS50's Introduction to AI](https://cs50.harvard.edu/ai/projects/4/nim/)
 - [Neural Networks – Lecture 5 (CS50 AI 2020)](https://youtu.be/J1QD9hLDEDY?si=41EOOXi-BaDbVy5E)
 
 ---
 
-*Universidade do Algarve – Departamento de Engenharia Eletrotécnica e Informática*
+**Universidade do Algarve — Departamento de Engenharia Eletrotécnica e Informática**
+*2025*
 
 ---
