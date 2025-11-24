@@ -8,13 +8,13 @@ Este projeto tem como objetivo implementar um agente inteligente capaz de aprend
 
 ---
 
-## 🎯 Objetivo Geral
+## Objetivo Geral
 
 Criar uma inteligência artificial baseada em **aprendizagem por reforço** (*Reinforcement Learning*), utilizando a técnica de **Q-learning**, para que o agente aprenda estratégias vencedoras no jogo Nim jogando repetidamente contra si mesmo.
 
 ---
 
-## 🎮 O Jogo Nim — Problema a Resolver
+## O Jogo Nim — Problema a Resolver
 
 O Nim consiste em vários montes, cada um com um número de objetos.
 Em cada jogada:
@@ -28,7 +28,7 @@ Apesar da simplicidade, a combinação de múltiplos montes produz um espaço de
 
 ---
 
-## 🧩 Arquitetura da Solução
+## Arquitetura da Solução
 
 O projeto é composto por dois ficheiros principais:
 
@@ -62,7 +62,7 @@ O projeto é composto por dois ficheiros principais:
 
 ---
 
-## 📊 Resultados Preliminares do Treino
+## Resultados Preliminares do Treino
 
 Treino rápido utilizado:
 
@@ -81,7 +81,7 @@ Observações do log:
 
 ---
 
-## 🏗️ Componentes Implementados
+## Componentes Implementados
 
 ### 1. **Classe `Nim`**
 
@@ -102,7 +102,7 @@ Observações do log:
 
 ---
 
-## 📐 Metodologia (Q-Learning)
+## Metodologia (Q-Learning)
 
 O agente segue a atualização:
 
@@ -122,7 +122,7 @@ Com repetição suficiente, o agente ajusta os seus Q-values até convergir para
 
 ---
 
-## ▶️ Como Utilizar
+## Como Utilizar
 
 ### Treino
 
@@ -150,7 +150,7 @@ python -m venv venv
 
 ---
 
-## 🛠️ Ferramentas e Técnicas
+## Ferramentas e Técnicas
 
 * Python 3.12
 * Algoritmo **Q-learning**
@@ -160,11 +160,21 @@ python -m venv venv
 
 ---
 
-## 🚀 Melhorias Futuras (Features Planeadas)
+## Melhorias Futuras (Features Planeadas)
 
 1. Persistência da tabela Q (`pickle`) para evitar re-treino completo.
 2. Experimentos com diferentes hiperparâmetros (α, ε, nº de jogos) incluindo registo de win-rate.
 3. Testes unitários para funções essenciais (`get_q_value`, `update_q_value`, `choose_action`, etc.).
+
+---
+
+## Verificações
+
+![style50](docs/style50.png)
+
+![check50](docs/check50.png)
+
+![submit50](docs/submit50.png)
 
 ---
 
