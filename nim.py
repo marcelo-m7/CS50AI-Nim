@@ -102,7 +102,8 @@ class NimAI():
         Return the Q-value for the state `state` and the action `action`.
         If no Q-value exists yet in `self.q`, return 0.
         """
-        raise NotImplementedError
+        key = (tuple(state), action)
+        return float(self.q.get(key, 0.0))
 
     def update_q_value(
         self,
@@ -149,8 +150,25 @@ class NimAI():
         Q-value in `self.q`. If there are no available actions in
         `state`, return 0.
         """
-        raise NotImplementedError
+        actions = Nim.available_actions(list(state))
+        # If there are no available actions, return 0.0
+        if not actions:
+            print(f"best_future_reward({tuple(state)}) = 0.0")
+            return 0.0
 
+        best = float("-inf")
+        for action in actions:
+            q = self.get_q_value(state, action)
+            if q > best:
+                best = q
+
+        best_value = 0.0 if best == float("-inf") else float(best)
+        # Print the computed best future reward for debugging/inspection
+        print(f"best_future_reward({tuple(state)}) = {best_value}")
+        # best_future_reward((1, 3, 5, 7)) = 0.0
+        # returned: 0.0
+        return best_value
+    
     def choose_action(self, state: Sequence[int], epsilon: bool = True) -> Tuple[int, int]:
         """
         Given a state `state`, return an action `(i, j)` to take.
