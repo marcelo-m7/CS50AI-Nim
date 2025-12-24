@@ -1,21 +1,5 @@
 # 🧠 Agente de Q-Learning para o Jogo Nim
 
-**Aluno:** Marcelo Santos (a79433)
-**Curso:** Engenharia de Sistemas e Tecnologias Informáticas — Universidade do Algarve
-**Unidade Curricular:** Inteligência Artificial
-
-Este projeto tem como objetivo implementar um agente inteligente capaz de aprender autonomamente a jogar o jogo **Nim**, recorrendo a **aprendizagem por reforço** com a técnica de **Q-learning**.
-
----
-
-## Objetivo Geral
-
-Criar uma inteligência artificial baseada em **aprendizagem por reforço** (*Reinforcement Learning*), utilizando a técnica de **Q-learning**, para que o agente aprenda estratégias vencedoras no jogo Nim jogando repetidamente contra si mesmo.
-
----
-
-## O Jogo Nim — Problema a Resolver
-
 O Nim consiste em vários montes, cada um com um número de objetos.
 Em cada jogada:
 
@@ -182,10 +166,3 @@ python -m venv venv
 
 - [Nim – CS50's Introduction to AI](https://cs50.harvard.edu/ai/projects/4/nim/)
 - [Neural Networks – Lecture 5 (CS50 AI 2020)](https://youtu.be/J1QD9hLDEDY?si=41EOOXi-BaDbVy5E)
-
----
-
-**Universidade do Algarve — Instituto Superior de Engenharia**
-*2025*
-
----
