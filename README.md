@@ -61,31 +61,6 @@ Observações do log:
 * Surgem também valores negativos (`-0.5`, `-0.75`, `-0.96875`) — punições propagadas de jogadas que levaram à derrota.
 * A tabela Q começa a ganhar forma, distinguindo movimentos vantajosos dos prejudiciais.
 
-**Interpretação:** o agente demonstra sinais claros de aprendizagem — após mais jogos, espera-se estabilização das estratégias.
-
----
-
-## Componentes Implementados
-
-### 1. **Classe `Nim`**
-
-* Representa o estado do jogo.
-* Gera ações válidas.
-* Aplica jogadas e alterna turnos.
-
-### 2. **Classe `NimAI`**
-
-* Geração e atualização de valores Q.
-* Estimativa de recompensas futuras.
-* Seleção de ações com política ε-greedy.
-
-### 3. **Treino e Jogo**
-
-* Treino autónomo (self-play).
-* Possibilidade de jogar contra o agente após treino.
-
----
-
 ## Metodologia (Q-Learning)
 
 O agente segue a atualização:
@@ -131,36 +106,6 @@ python -c "from nim import train; train(10)"
 ```bash
 python -m venv venv
 ```
-
----
-
-## Ferramentas e Técnicas
-
-* Python 3.12
-* Algoritmo **Q-learning**
-* Política **ε-greedy**
-* Testes automáticos com CS50 (`check50`, `style50`, `submit50`)
-* Git e documentação estruturada
-
----
-
-## Melhorias Futuras (Features Planeadas)
-
-1. Persistência da tabela Q (`pickle`) para evitar re-treino completo.
-2. Experimentos com diferentes hiperparâmetros (α, ε, nº de jogos) incluindo registo de win-rate.
-3. Testes unitários para funções essenciais (`get_q_value`, `update_q_value`, `choose_action`, etc.).
-
----
-
-## Verificações
-
-![style50](docs/style50.png)
-
-![check50](docs/check50.png)
-
-![submit50](docs/submit50.png)
-
----
 
 ## 🔗 Referências
 
